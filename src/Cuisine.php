@@ -29,13 +29,13 @@
         //Don't forget to name our tables/columns appropriately.
         function save()
         {
-            $GLOBALS['DB']->exec("INSERT INTO cuisine (type) VALUES ('{$this->getType()}')");
+            $GLOBALS['DB']->exec("INSERT INTO cuisines (type) VALUES ('{$this->getType()}')");
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
         static function getAll()
         {
-            $returned_cuisines = $GLOBALS['DB']->query("SELECT * FROM type;")
+            $returned_cuisines = $GLOBALS['DB']->query("SELECT * FROM cuisines;")
             $cuisine = array();
             foreach($returned_cuisines as $cuisine) {
                  $type = $cuisine['type'];
@@ -48,7 +48,7 @@
 
         static function deleteAll()
         {
-            $GLOBALS['DB']->exec("DELETE FROM cuisine;")
+            $GLOBALS['DB']->exec("DELETE FROM cuisines;")
         }
 
         static function find($search_id)
