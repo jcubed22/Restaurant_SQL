@@ -36,14 +36,14 @@
         static function getAll()
         {
             $returned_cuisines = $GLOBALS['DB']->query("SELECT * FROM cuisines;");
-            $cuisine = array();
+            $cuisines = array();
             foreach($returned_cuisines as $cuisine) {
                  $type = $cuisine['type'];
                  $id = $cuisine['id'];
                  $new_cuisine = new Cuisine($type, $id);
-                 array_push($cuisine, $new_cuisine);
+                 array_push($cuisines, $new_cuisine);
             }
-            return $cuisine;
+            return $cuisines;
         }
 
         static function deleteAll()
