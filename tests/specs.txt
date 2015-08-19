@@ -1,0 +1,39 @@
+1. test_getCuisineName
+
+    Behavior: Will get the name of a Cuisine.
+    Input: "Italian"
+    Output: "Italian"
+
+2. test_getCuisineId
+
+    Behavior: Will return true in response to the is_numeric boolean after the id variable being assigned a value of 1.
+    Input: $id = 1
+    Output: True
+
+3. test_CuisineSave
+
+    Behavior:  save a new instantiation of the Cuisine class and then use the getAll static function to make sure it shows up.
+
+    Input: "Spagetti"
+    Output: "Spagetti"
+
+4. test_CuisineGetAll
+
+    Behavior: It will see if it can get all objects of the cuisine class.
+
+    Input: "Mexican" "Thai"
+    Output: ["Mexican", "Thai"]
+
+5. test_deleteAll
+
+    Behavior: See if it will deletes all object of the cuisine class
+
+        Input: "Italian" "French"
+        Output: []
+
+6. test_find
+
+    Behavior: See if we can grab the id of a single object of the cuisine class.
+
+        Input: "Italian" "Chinese"
+        Output: "Italian"
