@@ -248,6 +248,7 @@
             //Assert
             $this->assertEquals([$test_venue, $test_venue2], $result);
         }
+
     }
 
 ?>
