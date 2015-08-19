@@ -79,7 +79,7 @@
             $GLOBALS['DB']->exec("INSERT INTO venues (name, cuisine_id, rating, address, description) VALUES ('{$this->getName()}', {$this->getCuisineId()}, {$this->getRating}, '{$this->getAddress}', '{$this->getDescription}');");
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
-        /* Maybe this is entirely useless?
+
         static function getAll()
         {
             $returned_venues = $GLOBALS['DB']->query("SELECT * FROM venues ORDER BY rating;");
@@ -94,7 +94,20 @@
                 $new_venue = new Venue($name, $cuisine_id, $id, $rating, $address, $description);
                 array_push($venues, $new_venue);
             }
-            return $venues; */
+            return $venues;
+        }
+
+        static function find($search_id)
+        {
+            $found_venue = null;
+            $venues = Task::getAll();
+            foreach($venues as $venue) {
+                $venue_id = $venue->getId();
+                if ($venue_id == $search_id) {
+                    $found_venue = $venue;
+                }
+            }
+            return $found_venue;
         }
 
         static function deleteAll()

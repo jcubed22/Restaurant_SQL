@@ -64,15 +64,23 @@
             }
         }
 
-        //Complete once we've built Venue class.
-        // function getVenues()
-        // {
-        //     $venues = array();
-        //     $returned_venues = $GLOBALS['DB']->query("SELECT * FROM venues WHERE cuisine_id = {$this->getId()} ORDER BY name;");
-        //     foreach($returned_venues as $venue) {
-        //         $
-        //     }
-        // }
+        function getVenues()
+        {
+            $venues = array();
+            $returned_venues = $GLOBALS['DB']->query("SELECT * FROM venues WHERE cuisine_id = {$this->getId()} ORDER BY name;");
+            foreach($returned_venues as $venue) {
+                $name = $venue['name'];
+                $cuisine_id = $venue['cuisine_id'];
+                $id = $venue['id'];
+                $rating = $venue['rating'];
+                $address = $venue['address'];
+                $description = $venue['description'];
+                $new_venue = new Venue($name, $cuisine_id, $id, $rating, $address, $description);
+                array_push($venues, $new_venue);
+            }
+            return $venues;
+            }
+        }
     }
 
 ?>
