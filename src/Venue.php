@@ -76,7 +76,7 @@
 
         function save()
         {
-            $GLOBALS['DB']->exec("INSERT INTO venues (name, cuisine_id, rating, address, description) VALUES ('{$this->getName()}', {$this->getCuisineId()}, {$this->getRating}, '{$this->getAddress}', '{$this->getDescription}');");
+            $GLOBALS['DB']->exec("INSERT INTO venues (name, cuisine_id, rating, address, description) VALUES ('{$this->getName()}', {$this->getCuisineId()}, {$this->getRating()}, '{$this->getAddress()}', '{$this->getDescription()}');");
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
@@ -100,7 +100,7 @@
         static function find($search_id)
         {
             $found_venue = null;
-            $venues = Task::getAll();
+            $venues = Venue::getAll();
             foreach($venues as $venue) {
                 $venue_id = $venue->getId();
                 if ($venue_id == $search_id) {
