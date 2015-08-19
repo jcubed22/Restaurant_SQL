@@ -60,6 +60,23 @@
             //Assert
             $this->assertEquals($test_Cuisine, $result[0]);
         }
+
+        function test_getAll()
+        {
+            //Arrange
+            $type = "Italian";
+            $type2 = "Thai";
+            $test_Cuisine = new Cuisine($type);
+            $test_Cuisine->save();
+            $test_Cuisine2 = new Cuisine($type2);
+            $test_Cuisine2->save();
+
+            //Act
+            $result = Cuisine::getAll();
+
+            //Assert
+            $this->assertEquals([$test_Cuisine, $test_Cuisine2], $result);
+        }
     }
 
 ?>
