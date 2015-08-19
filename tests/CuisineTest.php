@@ -46,6 +46,20 @@
             //Assert
             $this->assertEquals(true, is_numeric($result));
         }
+
+        function test_save()
+        {
+            //Arrange
+            $type = "Italian";
+            $test_Cuisine = new Cuisine($type);
+            $test_Cuisine->save();
+
+            //Act
+            $result = Cuisine::getAll();
+
+            //Assert
+            $this->assertEquals($test_Cuisine, $result[0]);
+        }
     }
 
 ?>
