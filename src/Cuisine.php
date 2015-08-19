@@ -11,12 +11,12 @@
             $this->id = $id;
         }
 
-        function setFood($new_type);
+        function setType($new_type)
         {
             $this->type = (string) $new_type;
         }
 
-        function getFood()
+        function getType()
         {
             return $this->type;
         }
@@ -35,7 +35,7 @@
 
         static function getAll()
         {
-            $returned_cuisines = $GLOBALS['DB']->query("SELECT * FROM cuisines;")
+            $returned_cuisines = $GLOBALS['DB']->query("SELECT * FROM cuisines;");
             $cuisine = array();
             foreach($returned_cuisines as $cuisine) {
                  $type = $cuisine['type'];
@@ -48,7 +48,7 @@
 
         static function deleteAll()
         {
-            $GLOBALS['DB']->exec("DELETE FROM cuisines;")
+            $GLOBALS['DB']->exec("DELETE FROM cuisines;");
         }
 
         static function find($search_id)
@@ -79,8 +79,8 @@
                 array_push($venues, $new_venue);
             }
             return $venues;
-            }
         }
+
     }
 
 ?>
