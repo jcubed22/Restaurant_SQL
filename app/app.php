@@ -55,6 +55,33 @@
         return $app['twig']->render('cuisine.html.twig', array('cuisine' => $cuisine, 'venues' => $cuisine->getVenues()));
     });
 
+    //Create a new venue
+    $app->post('/venues', function() use($app) {
+        $name = $_POST['name'];
+        $cuisine_id = $_POST['cuisine_id'];
+        $description = $_POST['description'];
+        $address = $_POST['address'];
+        $rating = $_POST['rating'];
+        $venue = new Venue($name, $cuisine_id, $id = null, $rating, $address, $description);
+        $venue->save();
+        $cuisine = Cuisine::find($cuisine_id);
+
+        return $app['twig']->render('cuisine.html.twig', array('cuisine' => $cuisine, 'venues' => $cuisine->getVenues()));
+    });
+
+    // Delete a single venue from a cuisine
+    // $app->delete('/cuisine/{id}', function($id) use ($app) {
+    //     $venues = Venue::find($id);
+    //     foreach($venues as $venue) {
+    //         $venue
+    //     }
+    //     $venue->deleteVenue();
+    //     $cuisine = Cuisine::find($id);
+    //     return $app['twig']->render('cuisine.html.twig', array('cuisine' => $cuisine, 'venues' => $cuisine->getVenues()));
+    // });
+
+
+
 
 
 
