@@ -19,6 +19,7 @@
         protected function tearDown()
         {
             Venue::deleteAll();
+            Cuisine::deleteAll();
         }
 
         function test_getName()
@@ -247,6 +248,39 @@
 
             //Assert
             $this->assertEquals([$test_venue, $test_venue2], $result);
+        }
+
+        function test_deleteVenue()
+        {
+            //Arrange
+            $type = "Thai";
+            $id = null;
+            $test_cuisine = new Cuisine($type, $id);
+            $test_cuisine->save();
+
+            $test_cuisine_id = $test_cuisine->getId();
+
+            $name = "Mai Thai";
+            $address = "1139 NW Elm Street";
+            $description = "Yum yum for my tum tum";
+            $rating = 3;
+
+            $name2 = "Screen Door";
+            $address2 = "19849 SW Santee Court";
+            $description2 = "Huge lines.  Not worth it.";
+            $rating2 = 4;
+
+            $test_venue = new Venue($name, $test_cuisine_id, $id, $rating, $address, $description);
+            $test_venue2 = new Venue($name2, $test_cuisine_id, $id, $rating2, $address2, $description2);
+
+            $test_venue->save();
+            $test_venue2->save();
+
+            //Act
+            $test_venue->deleteVenue();
+
+            //Assert
+            $this->assertEquals([$test_venue2], Venue::getAll());
         }
 
     }

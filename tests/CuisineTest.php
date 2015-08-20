@@ -6,6 +6,7 @@
     */
 
     require_once "src/Cuisine.php";
+    require_once "src/Venue.php";
 
     $server = 'mysql:host=localhost;dbname=restaurant_test';
     $username = 'root';
@@ -18,6 +19,7 @@
         protected function tearDown()
         {
             Cuisine::deleteAll();
+            Venue::deleteAll();
         }
 
         function test_getType()
@@ -112,7 +114,84 @@
             //Assert
             $this->assertEquals($test_Cuisine, $result);
         }
-        
+
+        function test_update()
+        {
+            //Arrange
+            $type = "Italian";
+            $id = null;
+            $test_cuisine = new Cuisine($type, $id);
+            $test_cuisine->save();
+
+            $new_cuisine_type = "Thai";
+
+            //Act
+            $test_cuisine->setType($new_cuisine_type);
+
+            //Assert
+            $this->assertEquals($new_cuisine_type, $test_cuisine->getType());
+        }
+
+        function test_updateCuisine()
+        {
+            //Arrange
+            $type = "Italian";
+            $id = null;
+            $test_cuisine = new Cuisine($type, $id);
+            $test_cuisine->save();
+
+            $new_type = "Thai";
+
+            //Act
+            $test_cuisine->updateCuisine($new_type);
+            $test_cuisine->save();
+
+            //Assert
+            $this->assertEquals($test_cuisine->getType(), "Thai");
+        }
+
+        function test_delete()
+        {
+            //Arrange
+            $type = "Italian";
+            $id = null;
+            $test_cuisine = new Cuisine($type, $id);
+            $test_cuisine->save();
+
+            $type2 = "Thai";
+            $id = null;
+            $test_cuisine2 = new Cuisine($type, $id);
+            $test_cuisine2->save();
+
+            //Act
+            $test_cuisine->deleteCuisine();
+
+            //Assert
+            $this->assertEquals([$test_cuisine2], Cuisine::getAll());
+        }
+
+        function test_deleteCuisineVenue()
+        {
+            //Arrange
+            $type = "Italian";
+            $id = null;
+            $test_cuisine = new Cuisine($type, $id);
+            $test_cuisine->save();
+
+            $name = "Montage";
+            $cuisine_id = $test_cuisine->getId();
+            $rating = 4;
+            $address = "1139 NW Elm Street";
+            $description = "Yum yum for my tum tum";
+            $test_venue = new Venue($name, $cuisine_id, $id, $rating, $address, $description);
+            $test_venue->save();
+
+            //Act
+            $test_cuisine->deleteCuisine();
+
+            //Assert
+            $this->assertEquals([], Venue::getAll());
+        }
     }
 
 ?>

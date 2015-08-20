@@ -114,6 +114,11 @@
         {
             $GLOBALS['DB']->exec("DELETE FROM venues;");
         }
+
+        function deleteVenue()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM venues WHERE id = {$this->getId()};");
+        }
     }
 
 ?>
