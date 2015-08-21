@@ -4,9 +4,6 @@
     require_once __DIR__.'/../src/Venue.php';
     require_once __DIR__.'/../src/Cuisine.php';
 
-    use Symfony\Component\HttpFoundation\Request;
-    Request::enableHttpMethodParameterOverride();
-
     $app = new Silex\Application();
     $app['debug'] = true;
 
@@ -15,23 +12,26 @@
     $password = 'root';
     $DB = new PDO($server, $username, $password);
 
+    use Symfony\Component\HttpFoundation\Request;
+    Request::enableHttpMethodParameterOverride();
+
     $app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => __DIR__.'/../views'
     ));
 
 
     //Home
     $app->get("/", function() use ($app) {
-        return $app['twig']->render('index.html.twig', array('cuisines' => Cuisine::getAll(), 'cuisine_check' => false, 'venue_check' => false));
+        return $app['twig']->render('index.html.twig', array('cuisines' => Cuisine::getAll(), 'form_check' => false, 'venue_check' => false));
     });
 
     //Cuisine form view
-    $app->get("/form-cuisines", function() use ($app) {
-        return $app['twig']->render('index.html.twig', array('cuisines' => Cuisine::getAll(), 'cuisine_check' => true, 'venue_check' => false));
+    $app->get("/form_cuisines", function() use ($app) {
+        return $app['twig']->render('index.html.twig', array('cuisines' => Cuisine::getAll(), 'form_check' => true));
     });
 
     //Venue form view
-    $app->get("/form-venue", function() use ($app) {
-        return $app['twig']->render('index.html.twig', array('cuisines' => Cuisine::getAll(), 'cuisine_check' => false, 'venue_check' => true));
+    $app->get("/form_venue", function() use ($app) {
+        return $app['twig']->render('index.html.twig', array('cuisines' => Cuisine::getAll(), 'form_check' => false));
     });
 
     //Submit cuisine
@@ -40,23 +40,23 @@
         $cuisine = new Cuisine($_POST['type']);
         $cuisine->save();
 
-        return $app['twig']->render('index.html.twig', array('cuisines' => Cuisine::getAll(), 'cuisine_check' => false, 'venue_check' => false));
+        return $app['twig']->render('index.html.twig', array('cuisines' => Cuisine::getAll(), 'form_check' => false));
     });
 
     //Delete all cuisines
     $app->post('/delete_cuisines', function() use($app) {
         Cuisine::deleteAll();
-        return $app['twig']->render('index.html.twig', array('cuisines' => Cuisine::getAll(), 'cuisine_check' => false, 'venue_check' => false));
+        return $app['twig']->render('index.html.twig', array('cuisines' => Cuisine::getAll(), 'form_check' => false));
     });
 
     //Navigate to cuisine page
     $app->get('/cuisines/{id}', function($id) use ($app) {
         $cuisine = Cuisine::find($id);
-        return $app['twig']->render('cuisine.html.twig', array('cuisine' => $cuisine, 'venues' => $cuisine->getVenues()));
+        return $app['twig']->render('cuisine.html.twig', array('cuisine' => $cuisine, 'venues' => $cuisine->getVenues(), 'form_check' => false));
     });
 
     //Create a new venue
-    $app->post('/venues', function() use($app) {
+    $app->post('/add_venue', function() use($app) {
         $name = $_POST['name'];
         $cuisine_id = $_POST['cuisine_id'];
         $description = $_POST['description'];
@@ -66,24 +66,15 @@
         $venue->save();
         $cuisine = Cuisine::find($cuisine_id);
 
-        return $app['twig']->render('cuisine.html.twig', array('cuisine' => $cuisine, 'venues' => $cuisine->getVenues()));
+        return $app['twig']->render('cuisine.html.twig', array('cuisine' => $cuisine, 'venues' => $cuisine->getVenues(), 'form_check' => false));
     });
 
-    // Delete a single venue from a cuisine
-    // $app->delete('/cuisine/{id}', function($id) use ($app) {
-    //     $venues = Venue::find($id);
-    //     foreach($venues as $venue) {
-    //         $venue
-    //     }
-    //     $venue->deleteVenue();
-    //     $cuisine = Cuisine::find($id);
-    //     return $app['twig']->render('cuisine.html.twig', array('cuisine' => $cuisine, 'venues' => $cuisine->getVenues()));
-    // });
 
 
-
-
-
+    $app->get('/form_restaurant', function() use ($app) {
+        $cuisine = Cuisine::find($_GET['cuisine_id']);
+        return $app['twig']->render('cuisine.html.twig', array('cuisine' => $cuisine, 'venues' => $cuisine->getVenues(), 'form_check' => true));
+    });
 
     return $app;
 ?>

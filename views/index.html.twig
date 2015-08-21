@@ -19,51 +19,24 @@
                 <p>No cuisines have been added.</p>
             {% endif %}
 
-            <form action="/form-cuisines" method="get">
-                <button type="submit">Add cuisine</button>
-            </form>
-
-            <form action="/form-venue" method="get">
-                <button type="submit">Add venue</button>
+            <form action="/form_cuisines">
+                <button type="submit" class="btn btn-primary">Add new cuisine</button>
             </form>
 
 
-        {% if cuisine_check == true %}
+        {% if form_check == true %}
             <form action="/add_cuisine" method="post">
-                <label for="type">Cuisine type:</label>
-                <input id ="type" type="text" name="type" required>
-
-                <button type="submit">Add cuisine</button>
-            </form>
-
-        {% endif %}
-
-        {% if venue_check == true %}
-            <form action="/add_venue" method="post">
-                <label for="name">Name:</label>
-                <input type="text" name="name" id="name">
-
-                <!--rating radios -->
-                <input type="radio" name="one" value=1>1
-                <input type="radio" name="two" value=2>2
-                <input type="radio" name="three" value=3>3
-                <input type="radio" name="four" value=4>4
-                <input type="radio" name="five" value=5>5
-
-                <label for="description">Description:</label>
-                <input type="text" name="description" id="description">
-
-                <label for="address">Address:</label>
-                <input type="text" name="address" id="address">
-
-                <button type="Submit" class="btn btn-default">Submit</button>
-
+                <div class="form-group">
+                    <label for="type">Cuisine type:</label>
+                    <input id ="type" type="text" name="type" required>
+                </div>
+                <button type="submit" class="btn btn-success">Add cuisine</button>
             </form>
 
         {% endif %}
 
             <form action="/delete_cuisines" method="post">
-                <button type="submit">Delete all cuisines</button>
+                <button type="submit" class = "btn btn-danger">Delete all cuisines</button>
             </form>
         </div>
     </body>
